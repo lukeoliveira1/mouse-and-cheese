@@ -16,7 +16,7 @@ cheese_image = pygame.transform.scale(
 
 pygame.init()
 
-maze = Maze(load_txt_maze("txts/maze3.txt"))
+maze = Maze(load_txt_maze("txts/maze4.txt"))
 
 screen = pygame.display.set_mode(
     (maze.width * variables["SCREEN_SIZE"], maze.height * variables["SCREEN_SIZE"])
@@ -24,18 +24,23 @@ screen = pygame.display.set_mode(
 
 pygame.display.set_caption("Mouse&Cheese Maze")
 
-
 def mark_visited(cell):
     maze.matrix_maze[cell.y][cell.x] = maze.visited_marker
 
 running = True
 found_cheese = False
 
+pygame.mixer.init()
+
+music = pygame.mixer.Sound("music.mp3")
+music.play()
+
 while running:
     screen.fill(variables["RED"])
 
     for y in range(maze.height):  # rows
         for x in range(maze.width):  # columns
+
             square = pygame.Rect(
                 x * variables["SCREEN_SIZE"],
                 y * variables["SCREEN_SIZE"],
@@ -52,48 +57,56 @@ while running:
             elif maze.matrix_maze[y][x] == "_":
                 pygame.draw.rect(screen, variables["GREEN"], square)
 
+            elif maze.matrix_maze[y][x] == maze.cheese_marker:
+                screen.blit(
+                    cheese_image,
+                    (
+                        maze.cheese_cell.x * variables["SCREEN_SIZE"],
+                        maze.cheese_cell.y * variables["SCREEN_SIZE"],
+                    ),
+                )
+
     if not found_cheese:
+
         if maze.current_cell == maze.cheese_cell:
             found_cheese = True
             print("Achou o queijo!")
             print("Veja seu caminho:")
 
+            maze.maze_stack.append(maze.cheese_cell)
+
             while maze.maze_stack:
                 cell = maze.maze_stack.pop()
-                print("Coordenadas do rato até o queijo: ", cell.y, cell.x)
                 maze.matrix_maze[cell.y][cell.x] = "_"
+            pygame.mixer.stop()
+
 
         else:
             mark_visited(maze.current_cell)
 
             neighbors = []
-            for dy, dx in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                ny, nx = maze.current_cell.y + dy, maze.current_cell.x + dx
+            for y, x in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                new_y, new_x = maze.current_cell.y + y, maze.current_cell.x + x
                 if (
-                    0 <= ny < maze.height
-                    and 0 <= nx < maze.width
-                    and maze.matrix_maze[ny][nx] != maze.wall_marker
-                    and maze.matrix_maze[ny][nx] != maze.visited_marker
+                    0 <= new_y < maze.height
+                    and 0 <= new_x < maze.width
+                    and maze.matrix_maze[new_y][new_x] != maze.wall_marker
+                    and maze.matrix_maze[new_y][new_x] != maze.visited_marker
                 ):
-                    neighbors.append(Cell(ny, nx))
+                    neighbors.append(Cell(new_y, new_x))
 
             if neighbors:
-                # for i in neighbors:
-                #     print('vizinhos atuais: ', i)
-
+               
+                # add position in maze_stack
                 maze.maze_stack.append(maze.current_cell)
 
+                # take first neightboor 
                 next_cell = neighbors[0]
-                print('posicao atual: ', maze.current_cell.y, maze.current_cell.x)
-                
-                # for i in maze.maze_stack:
-                #     print('maze_stack atual: ', i)
 
-                pygame.time.delay(300)
+                pygame.time.delay(100)
 
+                # move mouse to next position
                 maze.current_cell = next_cell
-
-                # print("posição visitada: ", maze.current_cell.y, " e ", maze.current_cell.x)
 
             else:
                 if not maze.maze_stack:
@@ -107,14 +120,6 @@ while running:
         (
             maze.current_cell.x * variables["SCREEN_SIZE"],
             maze.current_cell.y * variables["SCREEN_SIZE"],
-        ),
-    )
-
-    screen.blit(
-        cheese_image,
-        (
-            maze.cheese_cell.x * variables["SCREEN_SIZE"],
-            maze.cheese_cell.y * variables["SCREEN_SIZE"],
         ),
     )
 

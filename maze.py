@@ -2,10 +2,6 @@ class Cell:
     def __init__(self, y=None, x=None):
         self.x = x
         self.y = y
-        self.right = True
-        self.left = True
-        self.bottom = True
-        self.top = True
 
     def __str__(self):
         return f"{self.y} e {self.x}"
@@ -24,7 +20,7 @@ class Maze:
         self.passage_marker = '0'
         self.wall_marker = '1'
 
-        self.maze_stack = []  
+        self.maze_stack = []  # corect path mouse to cheese
 
         self.width = len(maze_data[0])
         self.height = len(maze_data)
