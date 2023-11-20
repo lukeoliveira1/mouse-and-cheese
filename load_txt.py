@@ -2,13 +2,15 @@ def load_txt_maze(file_name):
     with open(file_name, 'r') as file_txt:
         stack_load_txt_maze = []
 
+        # to add the walls on the sides
         for line in file_txt:
             
             line = '1' + line.strip() + '1' 
 
             stack_load_txt_maze.append(line)  
         
-        maze_rows = []
+        # to add the walls top and bottom
+        maze_rows = [] 
          
         first_line = stack_load_txt_maze[0]
          

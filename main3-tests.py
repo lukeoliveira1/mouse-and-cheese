@@ -16,7 +16,7 @@ cheese_image = pygame.transform.scale(
 
 pygame.init()
 
-maze = Maze(load_txt_maze("txts/maze4.txt"))
+maze = Maze(load_txt_maze("txts/maze.txt"))
 
 screen = pygame.display.set_mode(
     (maze.width * variables["SCREEN_SIZE"], maze.height * variables["SCREEN_SIZE"])
@@ -65,6 +65,15 @@ while running:
                         maze.cheese_cell.y * variables["SCREEN_SIZE"],
                     ),
                 )
+            # add the mouse here so it doesn't walk in front
+            elif maze.matrix_maze[y][x] == maze.mouse_marker:
+                screen.blit(
+                    mouse_image,
+                    (
+                        maze.current_cell.x * variables["SCREEN_SIZE"],
+                        maze.current_cell.y * variables["SCREEN_SIZE"],
+                    ),
+                )
 
     if not found_cheese:
 
@@ -78,7 +87,7 @@ while running:
             while maze.maze_stack:
                 cell = maze.maze_stack.pop()
                 maze.matrix_maze[cell.y][cell.x] = "_"
-                # print("Posicões do rato até o queijo: ", cell.y, cell.x)
+                print("Posicões do rato até o queijo: ", cell.y, cell.x)
             pygame.mixer.stop()
 
 
@@ -87,7 +96,7 @@ while running:
 
             neighbors = []
             for y, x in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-
+                
                 new_y, new_x = maze.current_cell.y + y, maze.current_cell.x + x
 
                 if (
@@ -114,20 +123,13 @@ while running:
                 # move mouse to next position
                 maze.current_cell = next_cell
 
+                
             else:
                 if not maze.maze_stack:
                     print("Caminho não encontrado, rato preso")
                     break
                 else:
-                    # will return positions until it has neighbors
                     maze.current_cell = maze.maze_stack.pop()
 
-    screen.blit(
-        mouse_image,
-        (
-            maze.current_cell.x * variables["SCREEN_SIZE"],
-            maze.current_cell.y * variables["SCREEN_SIZE"],
-        ),
-    )
 
     pygame.display.update()
