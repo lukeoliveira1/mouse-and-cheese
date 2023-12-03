@@ -20,7 +20,7 @@ class Maze:
         self.passage_marker = '0'
         self.wall_marker = '1'
 
-        self.maze_stack = []  # corect path mouse to cheese
+        self.maze_stack = []  # correct path mouse to cheese
 
         self.width = len(maze_data[0])
         self.height = len(maze_data)
