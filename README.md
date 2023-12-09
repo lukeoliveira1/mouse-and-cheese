@@ -13,7 +13,7 @@ Acompanhamento das movimentações do rato.
 
 Guia o rato pelo labirinto, explorando caminhos e retrocedendo quando necessário.
 
-## Instalação e Configuração
+# Instalação e Configuração
 
 Siga os passos abaixo para configurar o projeto em seu ambiente local:
 
