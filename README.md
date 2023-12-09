@@ -4,12 +4,12 @@ Este projeto, intitulado "Mouse and Cheese", é uma variação do Trapped Mouse.
 
 # Destaques
 
-Interface Gráfica com Pygame:
+## Interface Gráfica com Pygame:
 
 Labirinto interativo para visualização em tempo real.
 Acompanhamento das movimentações do rato.
 
-Algoritmo de Backtracking:
+## Algoritmo de Backtracking:
 
 Guia o rato pelo labirinto, explorando caminhos e retrocedendo quando necessário.
 
