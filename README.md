@@ -2,6 +2,8 @@
 
 Este projeto, intitulado "Mouse and Cheese", é uma variação do Trapped Mouse. Ele consiste em permitir que um rato astuto alcance autonomamente um suculento pedaço de queijo, utilizando um algoritmo de backtracking em conjunto com a interface gráfica.
 
+<img width="609" alt="image" src="https://github.com/lukeoliveira1/mouse-and-cheese/assets/105166358/2efaf4e2-88e7-4559-8684-127cb6a4b6d7">
+
 # Destaques
 
 ## Interface Gráfica com Pygame:
